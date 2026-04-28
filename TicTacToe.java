@@ -1,13 +1,36 @@
-public class TicTacToeUC6 {
+import java.util.Random;
 
-    static char[][] board = new char[3][3];
+public class TicTacToeUC7 {
+
+    static char[][] board = {
+        {'-', '-', '-'},
+        {'-', '-', '-'},
+        {'-', '-', '-'}
+    };
+    static char computerSymbol = 'O';
 
     public static void main(String[] args) {
-        placeMove(0, 0, 'X');
-        System.out.println(board[0][0]);
+        computerMove();
     }
 
-    static void placeMove(int row, int col, char symbol) {
-        board[row][col] = symbol;
+    static void computerMove() {
+        Random random = new Random();
+        int slot, row, col;
+
+        do {
+            slot = random.nextInt(9) + 1;
+            row = (slot - 1) / 3;
+            col = (slot - 1) % 3;
+        } while (!isValidMove(row, col));
+
+        board[row][col] = computerSymbol;
+        System.out.println("Computer placed '" + computerSymbol + "' at slot " + slot + " (row=" + row + ", col=" + col + ")");
+    }
+
+    static boolean isValidMove(int row, int col) {
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
+        }
+        return board[row][col] == '-';
     }
 }
